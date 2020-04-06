@@ -1,8 +1,10 @@
 const puppeteer = require("puppeteer");
-const { expect } = require("chai");
+const { should } = require("chai");
 
 let page;
 let browser;
+
+should();
 
 describe("Sandbox", () => {
   before(async function fn() {
@@ -28,9 +30,11 @@ describe("Sandbox", () => {
 
   it("should be on the sandbox", async () => {
     await page.waitFor("h1");
-    const title = await page.$eval("h1", (el) => el.textContent);
 
-    expect(await page.title()).to.equal("Sandbox");
-    expect(title).to.equal("Sandbox");
+    const title = await page.title();
+    const header = await page.$eval("h1", (el) => el.textContent);
+
+    title.should.eql("Sandbox");
+    header.should.eql("Sandbox");
   });
 });
